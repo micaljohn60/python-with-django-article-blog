@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+        <title>Article</title>
+        <link rel="stylesheet" href="{% static 'styles.css' %}">
+    </head>
+    <body>
+        <div class="wrapper">
+            
+            <nav>
+                <ul>
+                    <li>
+                        <a href="{% url 'articles:list' %}"><img src="{%static 'logo.png'%}" alt=""></a>
+                    </li>
+                    {% if user.is_authenticated %}                    
+                    <li style="float: right;">
+                        <form action="{% url 'accounts:logout'%}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit">Logout</button>
+                        </form>
+                        
+                        
+                    </li>
+                    <li style="float: right;">                            
+                      <button> 
+                        <a href="{% url 'articles:createpost'%}" class="listcolor">Create Article</a>
+                      </button>  
+                    </li>
+
+                    {% else %}
+                    <li style="float: right;"> 
+                        <button>
+                            <a href="{% url 'accounts:login' %}" class="listcolor">Log in</a>
+                        </button> 
+                    </li>
+                    <li style="float: right;"> 
+                        <button>
+                            <a href="{% url 'accounts:signup' %}" class="listcolor">sign up</a>
+                        </button>
+                    </li> 
+                    {% endif %}
+                </ul>
+            </nav>
+            {% block content %}
+
+            {% endblock %}
+        </div>
+    </body>
+</html>
